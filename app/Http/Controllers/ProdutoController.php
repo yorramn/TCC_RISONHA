@@ -76,11 +76,11 @@ class ProdutoController extends Controller
      */
     public function show($id)
     {
-        $produto = Produto::findOrFail($id);
+        $produto = Produto::find($id);
         if(isset($produto)){
             return Controller::retornarConteudo(null,$produto,200);
         }else{
-            return Controller::retornarConteudo('Produto não encontrado',null,402);
+            return Controller::retornarConteudo('Produto não encontrado',null,404);
         }
     }
 

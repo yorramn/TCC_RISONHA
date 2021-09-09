@@ -31,11 +31,6 @@ class CategoriaController extends Controller
 
     }
 
-    public function create()
-    {
-        //
-    }
-
     public function store(Request $request)
     {
         $attrs = $request->validate([
@@ -48,7 +43,7 @@ class CategoriaController extends Controller
             'user_id' => auth()->user()->id
         ]);
         if(isset($categoria)){
-            return $this->retorno('Categoria cadastrada com sucesso',200,$categoria);
+            return $this->retorno('Categoria cadastrada com sucesso',201,$categoria);
         }else{
             return $this->retorno('Erro ao cadastrar a categoria',500);
         }
@@ -56,21 +51,44 @@ class CategoriaController extends Controller
 
     public function show($id)
     {
-        //
-    }
-
-    public function edit($id)
-    {
-        //
+        $categoria = Categoria::find($id);
+        if(isset($categoria)){
+            return Controller::retornarConteudo(null, $categoria,200);
+        }else{
+            return Controller::retornarConteudo('Categoria não encontrada!', null,402);
+        }
     }
 
     public function update(Request $request, $id)
     {
-        //
+        $categoria = Categoria::find($id);
+        if(isset($categoria)){
+            $attrs = $request->validate([
+                'nome' => 'string',
+                'descricao' => 'string'
+            ]);
+            $categoria->update([
+                'nome' => $attrs['nome'],
+                'descricao' => $attrs['descricao'],
+                'user_id' => auth()->user()->id
+            ]);
+            return Controller::retornarConteudo('Categoria editada com sucesso',$categoria,200);
+        }else{
+            return Controller::retornarConteudo('Categoria não encontrada',null,402);
+        }
     }
 
     public function destroy($id)
     {
-        //
+        $categoria = Categoria::find($id);
+        if(isset($categoria)){
+            if($categoria->delete()){
+                return Controller::retornarConteudo('Categoria deletada com sucesso',$categoria,200);
+            }else{
+                return Controller::retornarConteudo('Erro ao deletar a categoria',null,402);
+            }
+        }else{
+            return Controller::retornarConteudo('Categoria não encontrada',null,402);
+        }
     }
 }
