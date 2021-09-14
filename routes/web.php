@@ -13,13 +13,6 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::group(['prefix' => '/user'], function () {
-    /*Route::get('/', [UserController::class, 'index']);
-    Route::post('/store',[UserController::class,'store']);
-    Route::post('/login',[UserController::class,'login']);*/
-});
-Route::get('/', [UserController::class, 'index']);
