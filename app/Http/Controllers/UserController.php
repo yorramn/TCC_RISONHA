@@ -10,11 +10,10 @@ class UserController extends Controller
 {
 
     public function index()
-    {/*
+    {
         return response([
             'user' => User::all()
-        ],200);*/
-        return "Nathan lindo!";
+        ],200);
     }
 
 
